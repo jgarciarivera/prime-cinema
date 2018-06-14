@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity
 
         MovieService service = MovieNetwork.geMovieNetwork().create(MovieService.class);
 
-        Call<MoviePage> call = service.getMoviesData(MovieService.API_KEY, "28", "2018");
+        Call<MoviePage> call = service.getMoviesData(MovieService.API_KEY, "28", "2018",
+                MovieService.VOTE_AVERAGE, "100");
 
         Log.wtf("URL called: ", call.request().url() + "");
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "There was an error retrieving the movie list...",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
