@@ -7,7 +7,9 @@ To-do:
 - Consider switching API's (TMDB vs. OMDB)
 - Add Picasso or Glide library to display posters
 - Format cards for even height
+- Improve small UI elements (padding, spacing, formatting, etc.)
 - Format individual movie ViewHolder items (consider LinearLayout vs. Constraint, etc)
 - Refine API call results (sort by rating, vote count over 20)
 - Add ProgressBar for loading data transition
 - Add genre and year selection functionality
+- Refactor and reorganize project structure
