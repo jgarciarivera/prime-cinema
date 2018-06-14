@@ -4,6 +4,7 @@ An Android app that displays top rated movies according to user selected genre a
 This project is meant to serve as a personal introduction to RecyclerViews, CardViews, Fragments, and other Android development concepts.
 
 To-do:
+- Consider switching API's (TMDB vs. OMDB)
 - Add Picasso or Glide library to display posters
 - Format cards for even height
 - Format individual movie ViewHolder items (consider LinearLayout vs. Constraint, etc)
