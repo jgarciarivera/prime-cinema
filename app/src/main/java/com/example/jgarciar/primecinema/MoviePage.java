@@ -22,6 +22,8 @@ public class MoviePage
     @Expose
     private List<Movie> movies;
 
+    // Constructor
+
     public Integer getPage()
     {
         return page;

@@ -62,23 +62,23 @@ public class Movie
     @Expose
     private String releaseDate;
 
-    public Movie()
-    {
-        this.voteCount = voteCount;
-        this.id = id;
-        this.video = video;
-        this.voteAverage = voteAverage;
-        this.title = title;
-        this.popularity = popularity;
-        this.posterPath = posterPath;
-        this.originalLanguage = originalLanguage;
-        this.originalTitle = originalTitle;
-        this.genreIds = genreIds;
-        this.backdropPath = backdropPath;
-        this.adult = adult;
-        this.overview = overview;
-        this.releaseDate = releaseDate;
-    }
+//    public Movie()
+//    {
+//        this.voteCount = voteCount;
+//        this.id = id;
+//        this.video = video;
+//        this.voteAverage = voteAverage;
+//        this.title = title;
+//        this.popularity = popularity;
+//        this.posterPath = posterPath;
+//        this.originalLanguage = originalLanguage;
+//        this.originalTitle = originalTitle;
+//        this.genreIds = genreIds;
+//        this.backdropPath = backdropPath;
+//        this.adult = adult;
+//        this.overview = overview;
+//        this.releaseDate = releaseDate;
+//    }
 
     public Integer getVoteCount() {
         return voteCount;
