@@ -1,10 +1,7 @@
 package com.example.jgarciar.primecinema;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieService
@@ -15,6 +12,6 @@ public interface MovieService
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviesData(@Query("api_key") String apiKey,
-                                @Query("with_genres") String genre,
-                                @Query("primary_release_year") String year);
+                                  @Query("with_genres") String genre,
+                                  @Query("primary_release_year") String year);
 }

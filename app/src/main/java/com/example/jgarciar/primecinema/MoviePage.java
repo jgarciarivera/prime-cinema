@@ -18,11 +18,19 @@ public class MoviePage
     @Expose
     private Integer totalPages;
 
-    @SerializedName("movies")
+    @SerializedName("results")
     @Expose
-    private List<Movie> movies;
+    private List<Movie> moviesList = null;
 
-    // Constructor
+    public List<Movie> getMoviesList()
+    {
+        return moviesList;
+    }
+
+    public void setMoviesList(List<Movie> moviesList)
+    {
+        this.moviesList = moviesList;
+    }
 
     public Integer getPage()
     {
@@ -52,15 +60,5 @@ public class MoviePage
     public void setTotalPages(Integer totalPages)
     {
         this.totalPages = totalPages;
-    }
-
-    public List<Movie> getMovies()
-    {
-        return movies;
-    }
-
-    public void setResults(List<Movie> movie)
-    {
-        this.movies = movie;
     }
 }
