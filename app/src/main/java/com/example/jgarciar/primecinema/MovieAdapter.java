@@ -43,6 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         Glide.with(holder.itemView.getContext())
                 .load(posterUrl)
+                .apply(RequestOptions.overrideOf(600,600))
                 .apply(RequestOptions.fitCenterTransform())
                 .into(holder.mMoviePoster);
     }
