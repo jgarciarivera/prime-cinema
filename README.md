@@ -6,4 +6,7 @@ This project is meant to serve as a personal introduction to RecyclerViews, Card
 To-do:
 - Add Picasso or Glide library to display posters
 - Format cards for even height
+- Format individual movie ViewHolder items (consider LinearLayout vs. Constraint, etc)
 - Refine API call results (sort by rating, vote count over 20)
+- Add ProgressBar for loading data transition
+- Add genre and year selection functionality
