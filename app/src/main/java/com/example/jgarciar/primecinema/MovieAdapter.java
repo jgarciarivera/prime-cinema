@@ -12,16 +12,32 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
+import static com.example.jgarciar.primecinema.MovieService.*;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-
-    private final String BASE_POSTER_URL = "https://image.tmdb.org/t/p/w185/";
-
-    private List<Movie> dataList;
+    private List<Movie> movieList;
 
     public MovieAdapter(List<Movie> movieList)
     {
-        this.dataList = movieList;
+        this.movieList = movieList;
+    }
+
+    class MovieViewHolder extends RecyclerView.ViewHolder
+    {
+        ImageView mMoviePoster;
+        TextView mMovieTitle;
+        TextView mMovieVoteAverage;
+        TextView mMovieOverview;
+
+        MovieViewHolder(View itemView)
+        {
+            super(itemView);
+            mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
+            mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
+            mMovieVoteAverage = itemView.findViewById(R.id.tv_movie_vote_average);
+            mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
+        }
     }
 
     @Override
@@ -35,39 +51,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        //holder.mMovieRating.setText(dataList.get(position).getVoteAverage().toString());
-        holder.mMovieTitle.setText(dataList.get(position).getTitle());
-        holder.mMovieOverview.setText(dataList.get(position).getOverview());
-
-        String posterUrl = BASE_POSTER_URL + dataList.get(position).getPosterPath();
+        String posterUrl = BASE_POSTER_URL + movieList.get(position).getPosterPath();
 
         Glide.with(holder.itemView.getContext())
                 .load(posterUrl)
                 .apply(RequestOptions.overrideOf(0,0))
                 .apply(RequestOptions.fitCenterTransform())
                 .into(holder.mMoviePoster);
-    }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder
-    {
-        //TextView mMovieRating;
-        TextView mMovieTitle;
-        TextView mMovieOverview;
-        ImageView mMoviePoster;
-
-        MovieViewHolder(View itemView)
-        {
-            super(itemView);
-            //mMovieRating = itemView.findViewById(R.id.tv_movie_rating);
-            mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
-            mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
-            mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
-        }
+        holder.mMovieVoteAverage.setText(movieList.get(position).getVoteAverage());
+        holder.mMovieTitle.setText(movieList.get(position).getTitle());
+        holder.mMovieOverview.setText(movieList.get(position).getOverview());
     }
 
     @Override
     public int getItemCount()
     {
-        return dataList.size();
+        return movieList.size();
     }
 }

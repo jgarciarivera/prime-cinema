@@ -7,12 +7,12 @@ public class MovieNetwork
 {
     private static Retrofit retrofit;
 
-    public static Retrofit geMovieNetwork()
+    public static Retrofit getMovieNetwork()
     {
         if (retrofit == null)
         {
             retrofit = new retrofit2.Retrofit.Builder()
-                    .baseUrl(MovieService.BASE_URL)
+                    .baseUrl(MovieService.BASE_API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
