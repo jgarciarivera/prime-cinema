@@ -26,18 +26,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     class MovieViewHolder extends RecyclerView.ViewHolder
     {
         ImageView mMoviePoster;
+
         TextView mMovieTitle;
+
         TextView mMovieDirector;
+
         TextView mMovieMpaaRating;
+
         TextView mMovieOverview;
 
         MovieViewHolder(View itemView)
         {
             super(itemView);
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
+
             mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
+
             mMovieDirector = itemView.findViewById(R.id.tv_movie_director);
+
             mMovieMpaaRating = itemView.findViewById(R.id.tv_movie_mpaa_rating);
+
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
         }
     }
@@ -46,7 +54,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+
         View view = layoutInflater.inflate(R.layout.movie_item, parent, false);
+
         return new MovieViewHolder(view);
     }
 
@@ -62,8 +72,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .into(holder.mMoviePoster);
 
         holder.mMovieTitle.setText(movieList.get(position).getTitle());
+
         holder.mMovieDirector.setText("Directed by: ");
+
         holder.mMovieMpaaRating.setText("PG-13");
+
         holder.mMovieOverview.setText(movieList.get(position).getOverview());
     }
 

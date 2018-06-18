@@ -18,12 +18,14 @@ import static com.example.jgarciar.primecinema.MovieService.*;
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
+
     private MovieAdapter mMovieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         MovieService service = MovieNetwork.getMovieNetwork().create(MovieService.class);
@@ -55,9 +57,11 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.rv_top_movies);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+
         mRecyclerView.setLayoutManager(layoutManager);
 
         mMovieAdapter= new MovieAdapter(movieDataList);
+
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 }
