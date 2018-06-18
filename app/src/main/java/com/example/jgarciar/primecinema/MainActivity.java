@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 
-    public int generateRandomGenreId()
+    private int generateRandomGenreId()
     {
         int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 10751, 14, 27, 9648, 878};
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         return genreIdOptions[index];
     }
 
-    public int generateRandomReleaseYear()
+    private int generateRandomReleaseYear()
     {
         int releaseYearOptions[] = {2014, 2015, 2016, 2017, 2018};
 
