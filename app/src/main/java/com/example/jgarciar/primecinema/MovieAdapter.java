@@ -27,7 +27,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     {
         ImageView mMoviePoster;
         TextView mMovieTitle;
-        TextView mMovieVoteAverage;
         TextView mMovieDirector;
         TextView mMovieMpaaRating;
         TextView mMovieOverview;
@@ -37,7 +36,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             super(itemView);
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
             mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
-            mMovieVoteAverage = itemView.findViewById(R.id.tv_movie_vote_average);
             mMovieDirector = itemView.findViewById(R.id.tv_movie_director);
             mMovieMpaaRating = itemView.findViewById(R.id.tv_movie_mpaa_rating);
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
@@ -63,10 +61,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .apply(RequestOptions.fitCenterTransform())
                 .into(holder.mMoviePoster);
 
-        holder.mMovieVoteAverage.setText(movieList.get(position).getVoteAverage());
         holder.mMovieTitle.setText(movieList.get(position).getTitle());
         holder.mMovieDirector.setText("Directed by: ");
-        holder.mMovieMpaaRating.setText("Rated: ");
+        holder.mMovieMpaaRating.setText("PG-13");
         holder.mMovieOverview.setText(movieList.get(position).getOverview());
     }
 
