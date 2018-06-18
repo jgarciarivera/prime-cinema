@@ -19,8 +19,8 @@ public interface MovieService
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePageData
             (@Query("api_key") String apiKey,
-             @Query("with_genres") String genre,
-             @Query("primary_release_year") String year,
+             @Query("with_genres") int genre,
+             @Query("primary_release_year") int year,
              @Query("sort_by") String voteAverage,
              @Query("vote_count.gte") String voteCount);
 }

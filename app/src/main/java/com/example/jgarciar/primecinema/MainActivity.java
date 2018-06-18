@@ -12,6 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.example.jgarciar.primecinema.MovieService.*;
 
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity
 
         MovieService service = MovieNetwork.getMovieNetwork().create(MovieService.class);
 
-        Call<MoviePage> call = service.getMoviePageData(API_KEY, "28",
-                "2018", VOTE_AVERAGE, VOTE_COUNT);
+        Call<MoviePage> call = service.getMoviePageData(API_KEY, generateRandomGenreId(),
+                generateRandomReleaseYear(), VOTE_AVERAGE, VOTE_COUNT);
 
         Log.wtf("URL called: ", call.request().url() + "");
 
@@ -63,5 +64,27 @@ public class MainActivity extends AppCompatActivity
         mMovieAdapter= new MovieAdapter(movieDataList);
 
         mRecyclerView.setAdapter(mMovieAdapter);
+    }
+
+    public int generateRandomGenreId()
+    {
+        int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 10751, 14, 27, 9648, 878};
+
+        Random random = new Random();
+
+        int index = random.nextInt(genreIdOptions.length);
+
+        return genreIdOptions[index];
+    }
+
+    public int generateRandomReleaseYear()
+    {
+        int releaseYearOptions[] = {2014, 2015, 2016, 2017, 2018};
+
+        Random random = new Random();
+
+        int index = random.nextInt(releaseYearOptions.length);
+
+        return releaseYearOptions[index];
     }
 }
