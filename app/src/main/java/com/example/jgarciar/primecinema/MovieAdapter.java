@@ -16,36 +16,29 @@ import static com.example.jgarciar.primecinema.MovieService.*;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private List<Movie> movieList;
+    private List<Movie> movies;
 
-    public MovieAdapter(List<Movie> movieList)
+    public MovieAdapter(List<Movie> movies)
     {
-        this.movieList = movieList;
+        this.movies = movies;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder
     {
         ImageView mMoviePoster;
-
         TextView mMovieTitle;
-
         TextView mMovieDirector;
-
         TextView mMovieMpaaRating;
-
         TextView mMovieOverview;
 
         MovieViewHolder(View itemView)
         {
             super(itemView);
+
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
-
             mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
-
             mMovieDirector = itemView.findViewById(R.id.tv_movie_director);
-
             mMovieMpaaRating = itemView.findViewById(R.id.tv_movie_mpaa_rating);
-
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
         }
     }
@@ -54,7 +47,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-
         View view = layoutInflater.inflate(R.layout.movie_item, parent, false);
 
         return new MovieViewHolder(view);
@@ -63,7 +55,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        String posterUrl = BASE_POSTER_URL + movieList.get(position).getPosterPath();
+        String posterUrl = TMDB_POSTER_URL + movies.get(position).getPosterPath();
 
         Glide.with(holder.itemView.getContext())
                 .load(posterUrl)
@@ -71,18 +63,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .apply(RequestOptions.fitCenterTransform())
                 .into(holder.mMoviePoster);
 
-        holder.mMovieTitle.setText(movieList.get(position).getTitle());
-
+        holder.mMovieTitle.setText(movies.get(position).getTitle());
         holder.mMovieDirector.setText("Directed by: ");
-
         holder.mMovieMpaaRating.setText("PG-13");
-
-        holder.mMovieOverview.setText(movieList.get(position).getOverview());
+        holder.mMovieOverview.setText(movies.get(position).getOverview());
     }
 
     @Override
     public int getItemCount()
     {
-        return movieList.size();
+        return movies.size();
     }
 }

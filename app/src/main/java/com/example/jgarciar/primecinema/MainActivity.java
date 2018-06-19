@@ -26,13 +26,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         MovieService service = MovieNetwork.getMovieNetwork().create(MovieService.class);
 
-        Call<MoviePage> call = service.getMoviePageData(API_KEY, generateRandomGenreId(),
-                generateRandomReleaseYear(), VOTE_AVERAGE, VOTE_COUNT);
+        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, generateRandomGenre(),
+                generateRandomYear(), VOTE_AVERAGE, VOTE_COUNT);
 
         Log.wtf("URL called: ", call.request().url() + "");
 
@@ -41,13 +40,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<MoviePage> call, Response<MoviePage> moviePageResponse)
             {
-                generateMovieCards(moviePageResponse.body().getMoviesList());
+                generateMovieCards(moviePageResponse.body().getMovies());
             }
 
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t)
             {
-                Toast.makeText(MainActivity.this, "There was an error retrieving the movie data...",
+                Toast.makeText(MainActivity.this, "Error fetching movie pages...",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -58,31 +57,27 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.rv_top_movies);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-
         mRecyclerView.setLayoutManager(layoutManager);
 
         mMovieAdapter= new MovieAdapter(movieDataList);
-
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 
-    private int generateRandomGenreId()
+    private int generateRandomGenre()
     {
         int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 10751, 14, 27, 9648, 878};
 
         Random random = new Random();
-
         int index = random.nextInt(genreIdOptions.length);
 
         return genreIdOptions[index];
     }
 
-    private int generateRandomReleaseYear()
+    private int generateRandomYear()
     {
         int releaseYearOptions[] = {2014, 2015, 2016, 2017, 2018};
 
         Random random = new Random();
-
         int index = random.nextInt(releaseYearOptions.length);
 
         return releaseYearOptions[index];

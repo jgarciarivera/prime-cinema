@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Movie
 {
-    @SerializedName("vote_average")
-    @Expose
-    private String voteAverage;
-
     @SerializedName("title")
     @Expose
     private String title;
@@ -20,11 +16,6 @@ public class Movie
     @SerializedName("overview")
     @Expose
     private String overview;
-
-    public String getVoteAverage()
-    {
-        return voteAverage;
-    }
 
     public String getTitle() {
         return title;

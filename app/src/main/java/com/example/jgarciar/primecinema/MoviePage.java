@@ -8,10 +8,10 @@ public class MoviePage
 {
     @SerializedName("results")
     @Expose
-    private List<Movie> moviesList = null;
+    private List<Movie> movies = null;
 
-    public List<Movie> getMoviesList()
+    public List<Movie> getMovies()
     {
-        return moviesList;
+        return movies;
     }
 }

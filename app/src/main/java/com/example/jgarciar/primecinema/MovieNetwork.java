@@ -12,7 +12,7 @@ public class MovieNetwork
         if (retrofit == null)
         {
             retrofit = new retrofit2.Retrofit.Builder()
-                    .baseUrl(MovieService.BASE_API_URL)
+                    .baseUrl(MovieService.TMDB_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
