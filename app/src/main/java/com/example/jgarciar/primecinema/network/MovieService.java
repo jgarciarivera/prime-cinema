@@ -21,7 +21,9 @@ public interface MovieService
 
     String VOTE_AVERAGE = "vote_average.desc";
 
-    String VOTE_COUNT = "100";
+    String VOTE_COUNT = "40";
+
+    String ORIGINAL_LANGUAGE = "en";
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePages
@@ -29,7 +31,8 @@ public interface MovieService
              @Query("with_genres") int genre,
              @Query("primary_release_year") int year,
              @Query("sort_by") String voteAverage,
-             @Query("vote_count.gte") String voteCount);
+             @Query("vote_count.gte") String voteCount,
+             @Query("with_original_language") String language);
 
     @GET("/")
     Call<MovieDetails> getMovieDetails

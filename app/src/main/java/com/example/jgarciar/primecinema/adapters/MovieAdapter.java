@@ -34,7 +34,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private Context context;
 
     private int year;
-
     private int genre;
 
     public MovieAdapter(List<Movie> movies, Context context, int genre, int year)
@@ -82,7 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             else if (genre == 16)
             {
-                stringGenre = "animation";
+                stringGenre = "animated";
             }
 
             else if (genre == 35)
@@ -103,11 +102,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             else if (genre == 18)
             {
                 stringGenre = "drama";
-            }
-
-            else if (genre == 10751)
-            {
-                stringGenre = "family";
             }
 
             else if (genre == 27)

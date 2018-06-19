@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.jgarciar.primecinema.network.MovieService.ORIGINAL_LANGUAGE;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_AVERAGE;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_COUNT;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         MovieService service = tmdbNetwork.getTmdbNetwork().create(MovieService.class);
 
         Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, randomGenre,
-                randomYear, VOTE_AVERAGE, VOTE_COUNT);
+                randomYear, VOTE_AVERAGE, VOTE_COUNT, ORIGINAL_LANGUAGE);
 
         Log.wtf("First URL called: ", call.request().url() + "");
 
