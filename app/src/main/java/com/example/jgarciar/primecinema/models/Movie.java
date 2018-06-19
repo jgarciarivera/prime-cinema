@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Movie
 {
+    @SerializedName("id")
+    @Expose
+    private Integer theMovieDatabaseId;
+
     @SerializedName("title")
     @Expose
     private String title;
@@ -17,15 +21,23 @@ public class Movie
     @Expose
     private String overview;
 
-    public String getTitle() {
+    public int getTheMovieDatabaseId()
+    {
+        return theMovieDatabaseId;
+    }
+
+    public String getTitle()
+    {
         return title;
     }
 
-    public String getPosterPath() {
+    public String getPosterPath()
+    {
         return posterPath;
     }
 
-    public String getOverview() {
+    public String getOverview()
+    {
         return overview;
     }
 }

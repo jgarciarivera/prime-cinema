@@ -35,12 +35,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fetchMoviePages();
+    }
+
+    private void fetchMoviePages()
+    {
+
         MovieService service = MovieNetwork.getMovieNetwork().create(MovieService.class);
 
         Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, generateRandomGenre(),
                 generateRandomYear(), VOTE_AVERAGE, VOTE_COUNT);
 
-        Log.wtf("URL called: ", call.request().url() + "");
+        Log.wtf("First URL called: ", call.request().url() + "");
 
         call.enqueue(new Callback<MoviePage>()
         {
@@ -59,14 +65,14 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void generateMovieCards(List<Movie> movieDataList)
+    private void generateMovieCards(List<Movie> movies)
     {
         mRecyclerView = findViewById(R.id.rv_top_movies);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mMovieAdapter= new MovieAdapter(movieDataList);
+        mMovieAdapter= new MovieAdapter(movies);
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 

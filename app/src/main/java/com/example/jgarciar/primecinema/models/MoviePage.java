@@ -2,7 +2,6 @@ package com.example.jgarciar.primecinema.models;
 
 import java.util.List;
 
-import com.example.jgarciar.primecinema.models.Movie;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
