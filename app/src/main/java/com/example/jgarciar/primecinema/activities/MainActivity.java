@@ -1,5 +1,6 @@
 package com.example.jgarciar.primecinema.activities;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,9 +10,9 @@ import android.widget.Toast;
 
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.adapters.MovieAdapter;
-import com.example.jgarciar.primecinema.utilities.MovieNetwork;
+import com.example.jgarciar.primecinema.network.tmdbNetwork;
 import com.example.jgarciar.primecinema.models.MoviePage;
-import com.example.jgarciar.primecinema.utilities.MovieService;
+import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.R;
 
 import retrofit2.Call;
@@ -21,13 +22,19 @@ import retrofit2.Response;
 import java.util.List;
 import java.util.Random;
 
-import static com.example.jgarciar.primecinema.utilities.MovieService.*;
+import static com.example.jgarciar.primecinema.network.MovieService.*;
 
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
 
     private MovieAdapter mMovieAdapter;
+
+    private Context mContext = MainActivity.this;
+
+    public int randomGenre = generateRandomGenre();
+
+    public int randomYear = generateRandomYear();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,11 +47,10 @@ public class MainActivity extends AppCompatActivity
 
     private void fetchMoviePages()
     {
+        MovieService service = tmdbNetwork.getTmdbNetwork().create(MovieService.class);
 
-        MovieService service = MovieNetwork.getMovieNetwork().create(MovieService.class);
-
-        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, generateRandomGenre(),
-                generateRandomYear(), VOTE_AVERAGE, VOTE_COUNT);
+        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, randomGenre,
+                randomYear, VOTE_AVERAGE, VOTE_COUNT);
 
         Log.wtf("First URL called: ", call.request().url() + "");
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t)
             {
-                Toast.makeText(MainActivity.this, "Error fetching movie pages...",
+                Toast.makeText(mContext, "Error fetching movie pages...",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -72,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mMovieAdapter= new MovieAdapter(movies);
+        mMovieAdapter= new MovieAdapter(mContext, movies, randomGenre, randomYear);
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 

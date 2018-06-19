@@ -1,13 +1,13 @@
-package com.example.jgarciar.primecinema.utilities;
+package com.example.jgarciar.primecinema.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MovieNetwork
+public class tmdbNetwork
 {
     private static Retrofit retrofit;
 
-    public static Retrofit getMovieNetwork()
+    public static Retrofit getTmdbNetwork()
     {
         if (retrofit == null)
         {

@@ -1,5 +1,6 @@
-package com.example.jgarciar.primecinema.utilities;
+package com.example.jgarciar.primecinema.network;
 
+import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.models.MoviePage;
 
 import retrofit2.Call;
@@ -14,9 +15,13 @@ public interface MovieService
 
     String TMDB_API_KEY = "1878c131f288c61ec2c2e13e7819146d";
 
+    String OMDB_BASE_URL = "http://www.omdbapi.com";
+
+    String OMDB_API_KEY = "3a15122c";
+
     String VOTE_AVERAGE = "vote_average.desc";
 
-    String VOTE_COUNT = "40";
+    String VOTE_COUNT = "600";
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePages
@@ -25,4 +30,9 @@ public interface MovieService
              @Query("primary_release_year") int year,
              @Query("sort_by") String voteAverage,
              @Query("vote_count.gte") String voteCount);
+
+    @GET("/")
+    Call<MovieDetails> getMovieDetails
+            (@Query("apiKey") String apiKey,
+             @Query("t") String title);
 }
