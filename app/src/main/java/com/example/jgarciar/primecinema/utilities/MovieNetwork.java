@@ -1,4 +1,4 @@
-package com.example.jgarciar.primecinema;
+package com.example.jgarciar.primecinema.utilities;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

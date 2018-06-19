@@ -1,4 +1,4 @@
-package com.example.jgarciar.primecinema;
+package com.example.jgarciar.primecinema.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.jgarciar.primecinema.R;
+import com.example.jgarciar.primecinema.models.Movie;
 
 import java.util.List;
 
-import static com.example.jgarciar.primecinema.MovieService.*;
+import static com.example.jgarciar.primecinema.utilities.MovieService.*;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {

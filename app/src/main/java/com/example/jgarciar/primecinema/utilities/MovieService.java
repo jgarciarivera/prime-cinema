@@ -1,4 +1,6 @@
-package com.example.jgarciar.primecinema;
+package com.example.jgarciar.primecinema.utilities;
+
+import com.example.jgarciar.primecinema.models.MoviePage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package com.example.jgarciar.primecinema;
+package com.example.jgarciar.primecinema.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jgarciar.primecinema.models.Movie;
+import com.example.jgarciar.primecinema.adapters.MovieAdapter;
+import com.example.jgarciar.primecinema.utilities.MovieNetwork;
+import com.example.jgarciar.primecinema.models.MoviePage;
+import com.example.jgarciar.primecinema.utilities.MovieService;
+import com.example.jgarciar.primecinema.R;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,7 +21,7 @@ import retrofit2.Response;
 import java.util.List;
 import java.util.Random;
 
-import static com.example.jgarciar.primecinema.MovieService.*;
+import static com.example.jgarciar.primecinema.utilities.MovieService.*;
 
 public class MainActivity extends AppCompatActivity
 {

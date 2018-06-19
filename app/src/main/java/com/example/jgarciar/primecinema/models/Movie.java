@@ -1,4 +1,4 @@
-package com.example.jgarciar.primecinema;
+package com.example.jgarciar.primecinema.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
