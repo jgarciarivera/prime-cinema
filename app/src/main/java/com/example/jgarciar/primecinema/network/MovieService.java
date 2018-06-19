@@ -21,7 +21,7 @@ public interface MovieService
 
     String VOTE_AVERAGE = "vote_average.desc";
 
-    String VOTE_COUNT = "600";
+    String VOTE_COUNT = "100";
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePages

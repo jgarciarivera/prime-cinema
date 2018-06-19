@@ -13,10 +13,6 @@ public class Movie
     @Expose
     private String posterPath;
 
-    @SerializedName("overview")
-    @Expose
-    private String overview;
-
     public String getTitle()
     {
         return title;
@@ -25,10 +21,5 @@ public class Movie
     public String getPosterPath()
     {
         return posterPath;
-    }
-
-    public String getOverview()
-    {
-        return overview;
     }
 }

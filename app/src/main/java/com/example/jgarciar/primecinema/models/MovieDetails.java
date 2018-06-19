@@ -57,10 +57,6 @@ public class MovieDetails
     @Expose
     private String awards;
 
-    @SerializedName("Poster")
-    @Expose
-    private String poster;
-
     @SerializedName("Metascore")
     @Expose
     private String metascore;
@@ -166,11 +162,6 @@ public class MovieDetails
         return awards;
     }
 
-    public String getPoster()
-    {
-        return poster;
-    }
-
     public String getMetascore()
     {
         return metascore;
@@ -220,5 +211,4 @@ public class MovieDetails
     {
         return response;
     }
-
 }

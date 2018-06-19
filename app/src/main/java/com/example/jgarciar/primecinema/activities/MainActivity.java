@@ -1,28 +1,30 @@
 package com.example.jgarciar.primecinema.activities;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.jgarciar.primecinema.models.Movie;
+import com.example.jgarciar.primecinema.R;
 import com.example.jgarciar.primecinema.adapters.MovieAdapter;
-import com.example.jgarciar.primecinema.network.tmdbNetwork;
+import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MoviePage;
 import com.example.jgarciar.primecinema.network.MovieService;
-import com.example.jgarciar.primecinema.R;
+import com.example.jgarciar.primecinema.network.tmdbNetwork;
+
+import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.List;
-import java.util.Random;
-
-import static com.example.jgarciar.primecinema.network.MovieService.*;
+import static com.example.jgarciar.primecinema.network.MovieService.TMDB_API_KEY;
+import static com.example.jgarciar.primecinema.network.MovieService.VOTE_AVERAGE;
+import static com.example.jgarciar.primecinema.network.MovieService.VOTE_COUNT;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -30,10 +32,8 @@ public class MainActivity extends AppCompatActivity
 
     private MovieAdapter mMovieAdapter;
 
-    private Context mContext = MainActivity.this;
-
+    private Context context = MainActivity.this;
     public int randomGenre = generateRandomGenre();
-
     public int randomYear = generateRandomYear();
 
     @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t)
             {
-                Toast.makeText(mContext, "Error fetching movie pages...",
+                Toast.makeText(context, "Error fetching movie pages...",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mMovieAdapter= new MovieAdapter(mContext, movies, randomGenre, randomYear);
+        mMovieAdapter= new MovieAdapter(movies, context, randomGenre, randomYear);
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 
     private int generateRandomGenre()
     {
-        int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 10751, 14, 27, 9648, 878};
+        int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 27, 10749, 53, 878};
 
         Random random = new Random();
         int index = random.nextInt(genreIdOptions.length);

@@ -37,7 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private int genre;
 
-    public MovieAdapter(Context context, List<Movie> movies, int genre, int year)
+    public MovieAdapter(List<Movie> movies, Context context, int genre, int year)
     {
         this.movies = movies;
         this.context = context;
@@ -47,22 +47,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
+        Movie mMovie;
         ImageView mMoviePoster;
         TextView mMovieTitle;
         TextView mMovieOverview;
         TextView mMovieDirector;
-        Movie mMovie;
 
         MovieViewHolder(View itemView)
         {
             super(itemView);
 
-            itemView.setOnClickListener(this);
-
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
             mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
             mMovieDirector = itemView.findViewById(R.id.tv_movie_director);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -72,89 +72,78 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             if (genre == 28)
             {
-                stringGenre = "Action";
+                stringGenre = "action";
             }
 
             else if (genre == 12)
             {
-                stringGenre = "Adventure";
+                stringGenre = "adventure";
             }
 
             else if (genre == 16)
             {
-                stringGenre = "Animation";
+                stringGenre = "animation";
             }
 
             else if (genre == 35)
             {
-                stringGenre = "Comedy";
+                stringGenre = "comedy";
             }
 
             else if (genre == 80)
             {
-                stringGenre = "Crime";
+                stringGenre = "crime";
             }
 
             else if (genre == 99)
             {
-                stringGenre = "Documentary";
+                stringGenre = "documentary";
             }
 
             else if (genre == 18)
             {
-                stringGenre = "Drama";
+                stringGenre = "drama";
             }
 
             else if (genre == 10751)
             {
-                stringGenre = "Family";
-            }
-
-            else if (genre == 14)
-            {
-                stringGenre = "Fantasy";
-            }
-
-            else if (genre == 36)
-            {
-                stringGenre = "History";
+                stringGenre = "family";
             }
 
             else if (genre == 27)
             {
-                stringGenre = "Horror";
+                stringGenre = "horror";
             }
 
-            else if (genre == 10402)
+            else if (genre == 10749)
             {
-                stringGenre = "Music";
+                stringGenre = "romance";
             }
 
-            else if (genre == 9648)
+            else if (genre == 53)
             {
-                stringGenre = "Mystery";
+                stringGenre = "thriller";
             }
 
             else if (genre == 878)
             {
-                stringGenre = "Science Fiction";
+                stringGenre = "science-fiction";
             }
 
-            else if (genre == 12)
+            else
             {
-                stringGenre = "Adventure";
+                stringGenre = "(error finding genre)";
             }
 
-
-            Toast.makeText(context, "Best " + stringGenre + " movies of " + year,
+            Toast.makeText(context, "Top " + stringGenre + " movies of " + year,
                     Toast.LENGTH_SHORT).show();
-
-            generateMovieDetailsFragment();
         }
 
         public void bind(Movie movie)
         {
             mMovie = movie;
+
+            String movieTitle = mMovie.getTitle();
 
             String posterUrl = TMDB_POSTER_URL + movie.getPosterPath();
 
@@ -164,9 +153,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     .apply(RequestOptions.fitCenterTransform())
                     .into(mMoviePoster);
 
-            mMovieTitle.setText(movie.getTitle());
-
-            String movieTitle = mMovie.getTitle();
+            mMovieTitle.setText(movieTitle);
 
             MovieService service = omdbNetwork.getOmdbNetwork().create(MovieService.class);
 
@@ -180,17 +167,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 public void onResponse(Call<MovieDetails> call, Response<MovieDetails> movieDetailsResponse)
                 {
                     MovieDetails movieDetails = movieDetailsResponse.body();
-//                    generateMovieDetailsFragment(movieDetails);
 
                     mMovieDirector.setText("Director: " + movieDetails.getDirector());
                     mMovieOverview.setText(movieDetails.getPlot());
-                    //mMovieMpaaRating.setText(movieDetails.getRated());
                 }
 
                 @Override
                 public void onFailure(Call<MovieDetails> call, Throwable t)
                 {
-                    Toast.makeText(context, "Error fetching movie pages...",
+                    Toast.makeText(context, "Error fetching movie details...",
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -216,10 +201,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public int getItemCount()
     {
         return movies.size();
-    }
-
-    public void generateMovieDetailsFragment()
-    {
-
     }
 }
