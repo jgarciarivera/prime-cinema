@@ -1,11 +1,12 @@
 # prime-cinema
 An Android app that displays top rated movies according to user selected genre and release year. Uses Retrofit and Gson libraries to make API calls and deserialize returned JSON objects.
 
-This project is meant to serve as a personal introduction to the Android Lifecycle, Fragments, Intents, RecyclerViews, and other Android development topics.
+This project is meant to serve as a personal introduction to the Activity Lifecycle, Fragments, Intents, RecyclerViews, and other Android development topics.
 
 To-Do:
-- Implement multiple API calls (TMDB and OMDB)
-- Fix card view formatting (consider Constraint Layout)
+- Remove null result cards between API mismatches
+- Refactor multiple API calls (TMDB and OMDB)
+- Fix card view formatting (consider ConstraintLayout)
 - ProgressBar for loading data transition (perhaps using RxJava library)
 - Spinners to select genre and year (replace temporary randomized genres/ years)
 - Fragments providing movie details upon click/ tap
