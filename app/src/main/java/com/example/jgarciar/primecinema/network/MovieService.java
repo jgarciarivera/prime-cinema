@@ -19,20 +19,26 @@ public interface MovieService
 
     String OMDB_API_KEY = "3a15122c";
 
-    String VOTE_AVERAGE = "vote_average.desc";
+    String YEAR = "2018";
 
-    String VOTE_COUNT = "40";
+    String GENRE = "28";
 
     String ORIGINAL_LANGUAGE = "en";
+
+    String VOTE_AVERAGE = "vote_average.desc";
+
+    String VOTE_COUNT = "vote_count.desc";
+
+    String POPULARITY = "popularity.desc";
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePages
             (@Query("api_key") String apiKey,
-             @Query("with_genres") int genre,
-             @Query("primary_release_year") int year,
+             @Query("primary_release_year") String year,
+             @Query("with_genres") String genre,
+             @Query("with_original_language") String language,
              @Query("sort_by") String voteAverage,
-             @Query("vote_count.gte") String voteCount,
-             @Query("with_original_language") String language);
+             @Query("sort_by") String voteCount);
 
     @GET("/")
     Call<MovieDetails> getMovieDetails

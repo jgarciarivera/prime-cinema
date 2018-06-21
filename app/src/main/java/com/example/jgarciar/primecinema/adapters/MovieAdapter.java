@@ -33,10 +33,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private Context context;
 
-    private int year;
-    private int genre;
+    private String year;
 
-    public MovieAdapter(List<Movie> movies, Context context, int genre, int year)
+    private String genre;
+
+    public MovieAdapter(List<Movie> movies, Context context, String genre, String year)
     {
         this.movies = movies;
         this.context = context;
@@ -46,124 +47,56 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        Movie mMovie;
         ImageView mMoviePoster;
         TextView mMovieTitle;
-        TextView mMovieOverview;
+        TextView mMovieMpaaRating;
         TextView mMovieDirector;
+        TextView mMovieOverview;
 
         MovieViewHolder(View itemView)
         {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
             mMovieTitle = itemView.findViewById(R.id.tv_movie_title);
-            mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
+            mMovieMpaaRating = itemView.findViewById(R.id.tv_movie_mpaa_rating);
             mMovieDirector = itemView.findViewById(R.id.tv_movie_director);
-
-            itemView.setOnClickListener(this);
+            mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
         }
 
         @Override
         public void onClick(View view)
         {
-            String stringGenre = null;
-
-            if (genre == 28)
-            {
-                stringGenre = "action";
-            }
-
-            else if (genre == 12)
-            {
-                stringGenre = "adventure";
-            }
-
-            else if (genre == 16)
-            {
-                stringGenre = "animated";
-            }
-
-            else if (genre == 35)
-            {
-                stringGenre = "comedy";
-            }
-
-            else if (genre == 80)
-            {
-                stringGenre = "crime";
-            }
-
-            else if (genre == 99)
-            {
-                stringGenre = "documentary";
-            }
-
-            else if (genre == 18)
-            {
-                stringGenre = "drama";
-            }
-
-            else if (genre == 27)
-            {
-                stringGenre = "horror";
-            }
-
-            else if (genre == 10749)
-            {
-                stringGenre = "romance";
-            }
-
-            else if (genre == 53)
-            {
-                stringGenre = "thriller";
-            }
-
-            else if (genre == 878)
-            {
-                stringGenre = "science-fiction";
-            }
-
-            else
-            {
-                stringGenre = "(error finding genre)";
-            }
-
-            Toast.makeText(context, "Top " + stringGenre + " movies of " + year,
+            Toast.makeText(context, "Top action films of 2018",
                     Toast.LENGTH_SHORT).show();
         }
 
         public void bind(Movie movie)
         {
-            mMovie = movie;
-
-            String movieTitle = mMovie.getTitle();
+            mMovieTitle.setText(movie.getTitle());
+            mMovieOverview.setText(movie.getOverview());
 
             String posterUrl = TMDB_POSTER_URL + movie.getPosterPath();
-
             Glide.with(itemView.getContext())
                     .load(posterUrl)
                     .apply(RequestOptions.overrideOf(0,0))
                     .apply(RequestOptions.fitCenterTransform())
                     .into(mMoviePoster);
 
-            mMovieTitle.setText(movieTitle);
-
             MovieService service = omdbNetwork.getOmdbNetwork().create(MovieService.class);
+            Call<MovieDetails> call = service.getMovieDetails(OMDB_API_KEY, movie.getTitle());
 
-            Call<MovieDetails> call = service.getMovieDetails(OMDB_API_KEY, movieTitle);
-
-            Log.wtf("Second URL called: ", call.request().url() + "");
+            Log.wtf("Movie details network request: ", call.request().url() + "");
 
             call.enqueue(new Callback<MovieDetails>()
             {
                 @Override
                 public void onResponse(Call<MovieDetails> call, Response<MovieDetails> movieDetailsResponse)
                 {
-                    MovieDetails movieDetails = movieDetailsResponse.body();
-
-                    mMovieDirector.setText("Director: " + movieDetails.getDirector());
-                    mMovieOverview.setText(movieDetails.getPlot());
+                    mMovieDirector.setText("Director: " + movieDetailsResponse.body().getDirector());
+                    mMovieMpaaRating.setText(movieDetailsResponse.body().getRated());
                 }
 
                 @Override

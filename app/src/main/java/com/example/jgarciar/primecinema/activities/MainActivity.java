@@ -22,10 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.ORIGINAL_LANGUAGE;
+import static com.example.jgarciar.primecinema.network.MovieService.POPULARITY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_AVERAGE;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_COUNT;
+import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -33,9 +36,7 @@ public class MainActivity extends AppCompatActivity
 
     private MovieAdapter mMovieAdapter;
 
-    private Context context = MainActivity.this;
-    public int randomGenre = generateRandomGenre();
-    public int randomYear = generateRandomYear();
+    private Context mContext = MainActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,11 +50,10 @@ public class MainActivity extends AppCompatActivity
     private void fetchMoviePages()
     {
         MovieService service = tmdbNetwork.getTmdbNetwork().create(MovieService.class);
+        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, YEAR,
+                GENRE, ORIGINAL_LANGUAGE, VOTE_AVERAGE, VOTE_COUNT);
 
-        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, randomGenre,
-                randomYear, VOTE_AVERAGE, VOTE_COUNT, ORIGINAL_LANGUAGE);
-
-        Log.wtf("First URL called: ", call.request().url() + "");
+        Log.wtf("First network request: ", call.request().url() + "");
 
         call.enqueue(new Callback<MoviePage>()
         {
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t)
             {
-                Toast.makeText(context, "Error fetching movie pages...",
+                Toast.makeText(mContext, "Error fetching movie pages...",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mMovieAdapter= new MovieAdapter(movies, context, randomGenre, randomYear);
+        mMovieAdapter= new MovieAdapter(movies, mContext, GENRE, YEAR);
         mRecyclerView.setAdapter(mMovieAdapter);
     }
 
