@@ -1,7 +1,8 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jgarciar.primecinema.R;
+import com.example.jgarciar.primecinema.activities.MainActivity;
+import com.example.jgarciar.primecinema.fragments.MovieDetailsFragment;
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.network.MovieService;
@@ -69,22 +72,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
         }
 
-        @Override
-        public void onClick(View view)
-        {
-            Toast.makeText(context, "Should load movie details...",
-                    Toast.LENGTH_SHORT).show();
-
-//            MainActivity myActivity = (MainActivity) view.getContext();
-//
-//            Fragment movieDetailsFragment = new MovieDetailsFragment();
-//
-//            myActivity.getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_one, movieDetailsFragment)
-//                    .addToBackStack(null).commit();
-        }
-
         public void bind(Movie movie)
         {
             mMovieTitle.setText(movie.getTitle());
@@ -119,9 +106,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 }
             });
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Movies", movies);
+
+            MainActivity myActivity = (MainActivity) view.getContext();
+
+            Fragment movieDetailsFragment = new MovieDetailsFragment();
+            movieDetailsFragment.setArguments(bundle);
+
+            myActivity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.activity_main, movieDetailsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
-    @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {

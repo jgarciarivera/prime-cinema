@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 public class Movie implements Serializable
 {
-
     @SerializedName("title")
     @Expose
     private String title;

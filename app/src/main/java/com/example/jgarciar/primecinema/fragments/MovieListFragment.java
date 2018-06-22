@@ -19,10 +19,9 @@ public class MovieListFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        ArrayList<Movie> movies = (ArrayList<Movie>) getArguments().getSerializable("theKey");
+        ArrayList<Movie> movies = (ArrayList<Movie>) getArguments().getSerializable("Movies");
 
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-
         RecyclerView recyclerView = view.findViewById(R.id.rv_top_movies);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

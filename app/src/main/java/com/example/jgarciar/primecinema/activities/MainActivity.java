@@ -1,7 +1,6 @@
 package com.example.jgarciar.primecinema.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,6 @@ import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.tmdbNetwork;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,51 +67,21 @@ public class MainActivity extends AppCompatActivity
 
     private void loadMovieListFragment(ArrayList<Movie> movies)
     {
-        MovieListFragment movieListFragment = new MovieListFragment();
-
         Bundle bundle = new Bundle();
+        bundle.putSerializable("Movies", movies);
 
-        bundle.putSerializable("theKey", movies);
-
+        MovieListFragment movieListFragment = new MovieListFragment();
         movieListFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.activity_main, movieListFragment);
         fragmentTransaction.commit();
-
-//        mRecyclerView = findViewById(R.id.rv_top_movies);
-//
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
-//        mRecyclerView.setLayoutManager(layoutManager);
-//
-//        mMovieAdapter= new MovieAdapter(movies, mContext, GENRE, YEAR);
-//        mRecyclerView.setAdapter(mMovieAdapter);
     }
 
     private void displayMoviesToast()
     {
         Toast.makeText(MainActivity.this, "Top action films of 2018",
                 Toast.LENGTH_LONG).show();
-    }
-
-    private int generateRandomGenre()
-    {
-        int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 27, 10749, 53, 878};
-
-        Random random = new Random();
-        int index = random.nextInt(genreIdOptions.length);
-
-        return genreIdOptions[index];
-    }
-
-    private int generateRandomYear()
-    {
-        int releaseYearOptions[] = {2014, 2015, 2016, 2017, 2018};
-
-        Random random = new Random();
-        int index = random.nextInt(releaseYearOptions.length);
-
-        return releaseYearOptions[index];
     }
 }
