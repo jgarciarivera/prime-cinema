@@ -24,7 +24,6 @@ import retrofit2.Response;
 
 import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.ORIGINAL_LANGUAGE;
-import static com.example.jgarciar.primecinema.network.MovieService.POPULARITY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_AVERAGE;
 import static com.example.jgarciar.primecinema.network.MovieService.VOTE_COUNT;
@@ -45,13 +44,16 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fetchMoviePages();
+
+        Toast.makeText(mContext, "Top action films of 2018",
+                Toast.LENGTH_LONG).show();
     }
 
     private void fetchMoviePages()
     {
         MovieService service = tmdbNetwork.getTmdbNetwork().create(MovieService.class);
-        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, YEAR,
-                GENRE, ORIGINAL_LANGUAGE, VOTE_AVERAGE, VOTE_COUNT);
+        Call<MoviePage> call = service.getMoviePages(TMDB_API_KEY, YEAR, GENRE,
+                ORIGINAL_LANGUAGE, VOTE_AVERAGE, VOTE_COUNT);
 
         Log.wtf("First network request: ", call.request().url() + "");
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     {
         mRecyclerView = findViewById(R.id.rv_top_movies);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(layoutManager);
 
         mMovieAdapter= new MovieAdapter(movies, mContext, GENRE, YEAR);

@@ -1,6 +1,10 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jgarciar.primecinema.R;
+import com.example.jgarciar.primecinema.activities.MainActivity;
+import com.example.jgarciar.primecinema.fragments.MovieDetailsFragment;
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.network.MovieService;
@@ -56,7 +62,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         MovieViewHolder(View itemView)
         {
             super(itemView);
-
             itemView.setOnClickListener(this);
 
             mMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
@@ -69,8 +74,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @Override
         public void onClick(View view)
         {
-            Toast.makeText(context, "Top action films of 2018",
+            Toast.makeText(context, "Should load movie details...",
                     Toast.LENGTH_SHORT).show();
+
+            MainActivity myActivity = (MainActivity) view.getContext();
+
+            Fragment movieDetailsFragment = new MovieDetailsFragment();
+
+            myActivity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_one, movieDetailsFragment)
+                    .addToBackStack(null).commit();
         }
 
         public void bind(Movie movie)
@@ -109,6 +123,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 
+    @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
