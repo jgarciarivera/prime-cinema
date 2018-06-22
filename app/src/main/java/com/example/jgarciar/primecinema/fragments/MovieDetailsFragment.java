@@ -17,6 +17,6 @@ public class MovieDetailsFragment extends Fragment
         String fragmentLoaded = "MovieDetailsFragment loaded successfully...";
         Log.wtf("----------", fragmentLoaded);
 
-        return inflater.inflate(R.layout.movie_details_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_movie_details, container, false);
     }
 }

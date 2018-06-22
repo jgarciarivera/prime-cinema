@@ -2,9 +2,6 @@ package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,25 +14,26 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jgarciar.primecinema.R;
-import com.example.jgarciar.primecinema.activities.MainActivity;
-import com.example.jgarciar.primecinema.fragments.MovieDetailsFragment;
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.omdbNetwork;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.OMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_POSTER_URL;
+import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
 
     private Context context;
 
@@ -43,12 +41,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private String genre;
 
-    public MovieAdapter(List<Movie> movies, Context context, String genre, String year)
+    public MovieAdapter(ArrayList<Movie> movies, Context context)
     {
         this.movies = movies;
         this.context = context;
-        this.genre = genre;
-        this.year = year;
+        this.genre = GENRE;
+        this.year = YEAR;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -77,14 +75,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             Toast.makeText(context, "Should load movie details...",
                     Toast.LENGTH_SHORT).show();
 
-            MainActivity myActivity = (MainActivity) view.getContext();
-
-            Fragment movieDetailsFragment = new MovieDetailsFragment();
-
-            myActivity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_one, movieDetailsFragment)
-                    .addToBackStack(null).commit();
+//            MainActivity myActivity = (MainActivity) view.getContext();
+//
+//            Fragment movieDetailsFragment = new MovieDetailsFragment();
+//
+//            myActivity.getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_one, movieDetailsFragment)
+//                    .addToBackStack(null).commit();
         }
 
         public void bind(Movie movie)
@@ -128,7 +126,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.movie_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.movie_list_item, parent, false);
 
         return new MovieViewHolder(view);
     }

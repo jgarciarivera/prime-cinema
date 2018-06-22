@@ -3,8 +3,11 @@ package com.example.jgarciar.primecinema.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie
+import java.io.Serializable;
+
+public class Movie implements Serializable
 {
+
     @SerializedName("title")
     @Expose
     private String title;
