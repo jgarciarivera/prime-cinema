@@ -1,8 +1,6 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,13 +22,11 @@ import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.omdbNetwork;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
 import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.OMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_POSTER_URL;
@@ -38,7 +34,6 @@ import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private static final String TAG = "MovieAdapter";
     private ArrayList<Movie> movies;
 
     private Context context;
@@ -46,8 +41,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private String year;
 
     private String genre;
-
-    private MovieDetailsFragment movieDetailsFragment;
 
     public MovieAdapter(ArrayList<Movie> movies, Context context)
     {
@@ -116,8 +109,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @Override
         public void onClick(View view)
         {
-
-
             MainActivity myActivity = (MainActivity) view.getContext();
 
             Fragment movieDetailsFragment = new MovieDetailsFragment();
@@ -136,7 +127,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.movie_list_item, parent, false);
 
-       // movieDetailsFragment
         return new MovieViewHolder(view);
     }
 

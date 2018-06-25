@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fetchMoviePages();
-
-        displayMoviesToast();
     }
 
     private void fetchMoviePages()
@@ -54,10 +52,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<MoviePage> call, Response<MoviePage> response)
             {
-                if (response.isSuccessful() && response.body() != null)
-                {
-                    loadMovieListFragment(response.body().getMovies());
-                }
+                loadMovieListFragment(response.body().getMovies());
             }
 
             @Override
@@ -80,11 +75,5 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.activity_main, movieListFragment).commit();
-    }
-
-    private void displayMoviesToast()
-    {
-        Toast.makeText(MainActivity.this, "Top action films of 2017",
-                Toast.LENGTH_LONG).show();
     }
 }
