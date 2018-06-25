@@ -14,6 +14,9 @@ import com.example.jgarciar.primecinema.models.Movie;
 
 import java.util.ArrayList;
 
+import static com.example.jgarciar.primecinema.activities.MainActivity.GENRE_ID;
+import static com.example.jgarciar.primecinema.activities.MainActivity.YEAR;
+
 public class MovieListFragment extends Fragment
 {
     @Override
@@ -27,7 +30,7 @@ public class MovieListFragment extends Fragment
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
+        MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity(), YEAR, GENRE_ID);
         recyclerView.setAdapter(movieAdapter);
 
         return view;

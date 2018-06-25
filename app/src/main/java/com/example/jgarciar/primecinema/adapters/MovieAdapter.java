@@ -1,7 +1,6 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,22 +14,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.jgarciar.primecinema.R;
 import com.example.jgarciar.primecinema.activities.MainActivity;
-import com.example.jgarciar.primecinema.fragments.MovieDetailsFragment;
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.omdbNetwork;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
+import static com.example.jgarciar.primecinema.activities.MainActivity.GENRE_ID;
+import static com.example.jgarciar.primecinema.activities.MainActivity.YEAR;
 import static com.example.jgarciar.primecinema.network.MovieService.OMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_POSTER_URL;
-import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
@@ -42,12 +41,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private String genre;
 
-    public MovieAdapter(ArrayList<Movie> movies, Context context)
+    public MovieAdapter(ArrayList<Movie> movies, Context context, String year, String genre)
     {
         this.movies = movies;
         this.context = context;
-        this.genre = GENRE;
-        this.year = YEAR;
+        this.genre = year;
+        this.year = genre;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -76,6 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mMovieOverview.setText(movie.getOverview());
 
             String posterUrl = TMDB_POSTER_URL + movie.getPosterPath();
+
             Glide.with(itemView.getContext())
                     .load(posterUrl)
                     .apply(RequestOptions.overrideOf(0,0))
@@ -83,6 +83,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     .into(mMoviePoster);
 
             MovieService service = omdbNetwork.getOmdbNetwork().create(MovieService.class);
+
             Call<MovieDetails> call = service.getMovieDetails(OMDB_API_KEY, movie.getTitle());
 
             Log.wtf("Movie details network request: ", call.request().url() + "");
@@ -94,7 +95,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 {
                     mMovieDirector.setText("Director: " + response.body().getDirector());
                     mMovieMpaaRating.setText(response.body().getRated());
-
                 }
 
                 @Override
@@ -109,15 +109,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @Override
         public void onClick(View view)
         {
-            MainActivity myActivity = (MainActivity) view.getContext();
+            Toast.makeText(context, "Top " + mapIdToGenre(GENRE_ID) + " films of "
+                    + YEAR, Toast.LENGTH_LONG).show();
+        }
 
-            Fragment movieDetailsFragment = new MovieDetailsFragment();
+        private String mapIdToGenre(String genreId)
+        {
+            HashMap<String, String> map = new HashMap<>();
 
-            myActivity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.activity_main, movieDetailsFragment)
-                    .addToBackStack(null)
-                    .commit();
+            map.put("28", "Action");
+            map.put("16", "Animated");
+            map.put("35", "Comedy");
+            map.put("80", "Crime");
+            map.put("99", "Documentary");
+            map.put("18", "Drama");
+            map.put("27", "Horror");
+            map.put("10749", "Romance");
+            map.put("878", "Science-Fiction");
+
+            return map.get(genreId);
         }
     }
 

@@ -19,17 +19,11 @@ public interface MovieService
 
     String OMDB_API_KEY = "3a15122c";
 
-    String YEAR = "2017";
-
-    String GENRE = "28";
-
     String ORIGINAL_LANGUAGE = "en";
 
     String VOTE_AVERAGE = "vote_average.desc";
 
     String VOTE_COUNT = "vote_count.desc";
-
-    String POPULARITY = "popularity.desc";
 
     @GET("/3/discover/movie")
     Call<MoviePage> getMoviePages
