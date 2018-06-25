@@ -1,6 +1,7 @@
 package com.example.jgarciar.primecinema.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -51,9 +52,12 @@ public class MainActivity extends AppCompatActivity
         call.enqueue(new Callback<MoviePage>()
         {
             @Override
-            public void onResponse(Call<MoviePage> call, Response<MoviePage> moviePageResponse)
+            public void onResponse(Call<MoviePage> call, Response<MoviePage> response)
             {
-                loadMovieListFragment(moviePageResponse.body().getMovies());
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    loadMovieListFragment(response.body().getMovies());
+                }
             }
 
             @Override
@@ -75,13 +79,12 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.activity_main, movieListFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.add(R.id.activity_main, movieListFragment).commit();
     }
 
     private void displayMoviesToast()
     {
-        Toast.makeText(MainActivity.this, "Top action films of 2018",
+        Toast.makeText(MainActivity.this, "Top action films of 2017",
                 Toast.LENGTH_LONG).show();
     }
 }

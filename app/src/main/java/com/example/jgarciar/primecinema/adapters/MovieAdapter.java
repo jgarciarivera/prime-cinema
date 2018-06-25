@@ -1,6 +1,7 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.OMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_POSTER_URL;
@@ -36,6 +38,7 @@ import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
+    private static final String TAG = "MovieAdapter";
     private ArrayList<Movie> movies;
 
     private Context context;
@@ -43,6 +46,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private String year;
 
     private String genre;
+
+    private MovieDetailsFragment movieDetailsFragment;
 
     public MovieAdapter(ArrayList<Movie> movies, Context context)
     {
@@ -92,10 +97,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             call.enqueue(new Callback<MovieDetails>()
             {
                 @Override
-                public void onResponse(Call<MovieDetails> call, Response<MovieDetails> movieDetailsResponse)
+                public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response)
                 {
-                    mMovieDirector.setText("Director: " + movieDetailsResponse.body().getDirector());
-                    mMovieMpaaRating.setText(movieDetailsResponse.body().getRated());
+                    mMovieDirector.setText("Director: " + response.body().getDirector());
+                    mMovieMpaaRating.setText(response.body().getRated());
+
                 }
 
                 @Override
@@ -110,13 +116,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @Override
         public void onClick(View view)
         {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("Movies", movies);
+
 
             MainActivity myActivity = (MainActivity) view.getContext();
 
             Fragment movieDetailsFragment = new MovieDetailsFragment();
-            movieDetailsFragment.setArguments(bundle);
 
             myActivity.getSupportFragmentManager()
                     .beginTransaction()
@@ -132,6 +136,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.movie_list_item, parent, false);
 
+       // movieDetailsFragment
         return new MovieViewHolder(view);
     }
 
