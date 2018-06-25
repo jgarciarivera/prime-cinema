@@ -1,8 +1,7 @@
 package com.example.jgarciar.primecinema.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,6 @@ public class MovieDetailsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        String fragmentLoaded = "MovieDetailsFragment loaded successfully...";
-        Log.wtf("----------", fragmentLoaded);
-
-        return inflater.inflate(R.layout.movie_details_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_movie_details, container, false);
     }
 }

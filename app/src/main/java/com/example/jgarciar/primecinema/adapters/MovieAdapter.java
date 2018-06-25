@@ -1,10 +1,7 @@
 package com.example.jgarciar.primecinema.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,18 +21,20 @@ import com.example.jgarciar.primecinema.models.MovieDetails;
 import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.omdbNetwork;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.jgarciar.primecinema.network.MovieService.GENRE;
 import static com.example.jgarciar.primecinema.network.MovieService.OMDB_API_KEY;
 import static com.example.jgarciar.primecinema.network.MovieService.TMDB_POSTER_URL;
+import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
 
     private Context context;
 
@@ -43,12 +42,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private String genre;
 
-    public MovieAdapter(List<Movie> movies, Context context, String genre, String year)
+    public MovieAdapter(ArrayList<Movie> movies, Context context)
     {
         this.movies = movies;
         this.context = context;
-        this.genre = genre;
-        this.year = year;
+        this.genre = GENRE;
+        this.year = YEAR;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -71,22 +70,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mMovieOverview = itemView.findViewById(R.id.tv_movie_overview);
         }
 
-        @Override
-        public void onClick(View view)
-        {
-            Toast.makeText(context, "Should load movie details...",
-                    Toast.LENGTH_SHORT).show();
-
-            MainActivity myActivity = (MainActivity) view.getContext();
-
-            Fragment movieDetailsFragment = new MovieDetailsFragment();
-
-            myActivity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_one, movieDetailsFragment)
-                    .addToBackStack(null).commit();
-        }
-
         public void bind(Movie movie)
         {
             mMovieTitle.setText(movie.getTitle());
@@ -107,10 +90,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             call.enqueue(new Callback<MovieDetails>()
             {
                 @Override
-                public void onResponse(Call<MovieDetails> call, Response<MovieDetails> movieDetailsResponse)
+                public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response)
                 {
-                    mMovieDirector.setText("Director: " + movieDetailsResponse.body().getDirector());
-                    mMovieMpaaRating.setText(movieDetailsResponse.body().getRated());
+                    mMovieDirector.setText("Director: " + response.body().getDirector());
+                    mMovieMpaaRating.setText(response.body().getRated());
+
                 }
 
                 @Override
@@ -121,14 +105,27 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 }
             });
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            MainActivity myActivity = (MainActivity) view.getContext();
+
+            Fragment movieDetailsFragment = new MovieDetailsFragment();
+
+            myActivity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.activity_main, movieDetailsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
-    @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.movie_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.movie_list_item, parent, false);
 
         return new MovieViewHolder(view);
     }

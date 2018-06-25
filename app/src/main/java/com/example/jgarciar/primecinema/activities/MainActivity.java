@@ -1,22 +1,21 @@
 package com.example.jgarciar.primecinema.activities;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.jgarciar.primecinema.R;
-import com.example.jgarciar.primecinema.adapters.MovieAdapter;
+import com.example.jgarciar.primecinema.fragments.MovieListFragment;
 import com.example.jgarciar.primecinema.models.Movie;
 import com.example.jgarciar.primecinema.models.MoviePage;
 import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.tmdbNetwork;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,12 +30,6 @@ import static com.example.jgarciar.primecinema.network.MovieService.YEAR;
 
 public class MainActivity extends AppCompatActivity
 {
-    private RecyclerView mRecyclerView;
-
-    private MovieAdapter mMovieAdapter;
-
-    private Context mContext = MainActivity.this;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,9 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fetchMoviePages();
-
-        Toast.makeText(mContext, "Top action films of 2018",
-                Toast.LENGTH_LONG).show();
     }
 
     private void fetchMoviePages()
@@ -60,48 +50,30 @@ public class MainActivity extends AppCompatActivity
         call.enqueue(new Callback<MoviePage>()
         {
             @Override
-            public void onResponse(Call<MoviePage> call, Response<MoviePage> moviePageResponse)
+            public void onResponse(Call<MoviePage> call, Response<MoviePage> response)
             {
-                generateMovieCards(moviePageResponse.body().getMovies());
+                loadMovieListFragment(response.body().getMovies());
             }
 
             @Override
             public void onFailure(Call<MoviePage> call, Throwable t)
             {
-                Toast.makeText(mContext, "Error fetching movie pages...",
+                Toast.makeText(MainActivity.this, "Error fetching movie pages...",
                         Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void generateMovieCards(List<Movie> movies)
+    private void loadMovieListFragment(List<Movie> movies)
     {
-        mRecyclerView = findViewById(R.id.rv_top_movies);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Movies", new ArrayList<>(movies));
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(layoutManager);
+        MovieListFragment movieListFragment = new MovieListFragment();
+        movieListFragment.setArguments(bundle);
 
-        mMovieAdapter= new MovieAdapter(movies, mContext, GENRE, YEAR);
-        mRecyclerView.setAdapter(mMovieAdapter);
-    }
-
-    private int generateRandomGenre()
-    {
-        int genreIdOptions[] = {28, 12, 16, 35, 80, 99, 18, 27, 10749, 53, 878};
-
-        Random random = new Random();
-        int index = random.nextInt(genreIdOptions.length);
-
-        return genreIdOptions[index];
-    }
-
-    private int generateRandomYear()
-    {
-        int releaseYearOptions[] = {2014, 2015, 2016, 2017, 2018};
-
-        Random random = new Random();
-        int index = random.nextInt(releaseYearOptions.length);
-
-        return releaseYearOptions[index];
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.activity_main, movieListFragment).commit();
     }
 }
