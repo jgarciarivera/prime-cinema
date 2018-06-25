@@ -1,7 +1,6 @@
 package com.example.jgarciar.primecinema.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +15,7 @@ import com.example.jgarciar.primecinema.network.MovieService;
 import com.example.jgarciar.primecinema.network.tmdbNetwork;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void loadMovieListFragment(ArrayList<Movie> movies)
+    private void loadMovieListFragment(List<Movie> movies)
     {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Movies", movies);
+        bundle.putSerializable("Movies", new ArrayList<>(movies));
 
         MovieListFragment movieListFragment = new MovieListFragment();
         movieListFragment.setArguments(bundle);
